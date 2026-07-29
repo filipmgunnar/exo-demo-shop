@@ -16,6 +16,13 @@ func TestLineItemTotalSingleUnitDiscount(t *testing.T) {
 	}
 }
 
+func TestLineItemTotalMultiUnitDiscount(t *testing.T) {
+	li := LineItem{SKU: "ESP-1K", Name: "Espresso beans 1kg", Quantity: 4, UnitPriceCents: 2400, DiscountPct: 15}
+	if got, want := li.TotalCents(), int64(8160); got != want {
+		t.Fatalf("TotalCents() = %d, want %d", got, want)
+	}
+}
+
 func TestLineItemTotalFullDiscount(t *testing.T) {
 	li := LineItem{SKU: "PROMO", Name: "Sample bag", Quantity: 1, UnitPriceCents: 500, DiscountPct: 100}
 	if got, want := li.TotalCents(), int64(0); got != want {
@@ -64,8 +71,10 @@ func TestSeededOrderTotals(t *testing.T) {
 		want int64
 	}{
 		{1041, 3100},
+		{1042, 10010},
 		{1043, 11610},
 		{1044, 5400},
+		{1045, 5440},
 	}
 	for _, tc := range cases {
 		o, ok := s.Get(tc.id)

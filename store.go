@@ -29,7 +29,7 @@ func (li LineItem) TotalCents() int64 {
 	if li.DiscountPct == 0 {
 		return gross
 	}
-	return li.UnitPriceCents * int64(100-li.DiscountPct) / 100
+	return gross * int64(100-li.DiscountPct) / 100
 }
 
 func (o Order) TotalCents() int64 {
